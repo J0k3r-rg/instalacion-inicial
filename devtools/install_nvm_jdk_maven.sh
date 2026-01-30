@@ -32,11 +32,11 @@ sudo -v
 
 pacman_install git curl
 
-echo -e "${GREEN}Instalando JDK 21 y Maven...${NC}"
-if have_pkg jdk21-openjdk; then
-    pacman_install jdk21-openjdk
+echo -e "${GREEN}Instalando JDK 25 y Maven...${NC}"
+if have_pkg jdk-openjdk; then
+    pacman_install jdk-openjdk
 else
-    die "No se encontró el paquete 'jdk21-openjdk' en pacman."
+    die "No se encontró el paquete 'jdk-openjdk' en pacman."
 fi
 
 if have_pkg maven; then
@@ -85,4 +85,4 @@ if [ -t 0 ] && [ -t 1 ]; then
     esac
 fi
 
-echo -e "${GREEN}Devtools instalados: JDK 21 + Maven + NVM.${NC}"
+echo -e "${GREEN}Devtools instalados: JDK 25 + Maven + NVM.${NC}"

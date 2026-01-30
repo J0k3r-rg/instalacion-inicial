@@ -1,0 +1,12 @@
+Host kvm4
+    HostName /* host 1 */
+    User root
+    IdentityFile ~/.ssh/id_ed25519
+    Port 22
+    ForwardAgent yes
+
+Host kvm2
+    HostName /* host 2 */
+    User root
+    IdentityFile ~/.ssh/id_ed25519
+    Port 22

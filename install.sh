@@ -67,6 +67,25 @@ sudo -v
 sudo pacman -Syu --noconfirm
 pacman_install git curl base-devel grim slurp wl-clipboard pciutils
 
+# 1.1. Instalación de NetworkManager para conectividad
+echo -e "${GREEN}Instalando NetworkManager para gestión de red...${NC}"
+pacman_install networkmanager network-manager-applet
+
+# Habilitar NetworkManager
+sudo systemctl enable NetworkManager.service
+echo -e "${GREEN}NetworkManager habilitado. Se iniciará en el próximo reinicio.${NC}"
+
+# 1.2. Instalación de sistema de audio PipeWire
+echo -e "${GREEN}Instalando PipeWire y componentes de audio...${NC}"
+pacman_install pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber
+
+# Instalar control de volumen gráfico
+pacman_install pavucontrol
+
+# 1.3. Instalación de códecs de video para reproducción multimedia
+echo -e "${GREEN}Instalando códecs de video y soporte multimedia...${NC}"
+pacman_install ffmpeg gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav
+
 require_cmd git
 require_cmd curl
 
@@ -401,16 +420,16 @@ if [ -t 0 ] && [ -t 1 ]; then
 fi
 
 if [ -t 0 ] && [ -t 1 ]; then
-    echo -n "¿Deseas instalar Windsurf ahora? (s/n, por defecto: n): "
-    read -r install_windsurf
-    case "$install_windsurf" in
+    echo -n "¿Deseas instalar Neovim ahora? (s/n, por defecto: n): "
+    read -r install_nvim
+    case "$install_nvim" in
         [sS]|[sS][iI])
-            WINDSURF_INSTALLER="$SCRIPT_DIR/windsurf/install_windsurf.sh"
-            if [ -f "$WINDSURF_INSTALLER" ]; then
-                chmod +x "$WINDSURF_INSTALLER" 2>/dev/null || true
-                bash "$WINDSURF_INSTALLER"
+            NVIM_INSTALLER="$SCRIPT_DIR/nvim/install.sh"
+            if [ -f "$NVIM_INSTALLER" ]; then
+                chmod +x "$NVIM_INSTALLER" 2>/dev/null || true
+                bash "$NVIM_INSTALLER"
             else
-                echo -e "${RED}No se encontró el instalador de Windsurf en $WINDSURF_INSTALLER${NC}"
+                echo -e "${RED}No se encontró el instalador de Neovim en $NVIM_INSTALLER${NC}"
             fi
             ;;
         *)
@@ -419,25 +438,7 @@ if [ -t 0 ] && [ -t 1 ]; then
 fi
 
 if [ -t 0 ] && [ -t 1 ]; then
-    echo -n "¿Deseas instalar IntelliJ IDEA ahora? (s/n, por defecto: n): "
-    read -r install_intellij
-    case "$install_intellij" in
-        [sS]|[sS][iI])
-            INTELLIJ_INSTALLER="$SCRIPT_DIR/intellij/install_intellij.sh"
-            if [ -f "$INTELLIJ_INSTALLER" ]; then
-                chmod +x "$INTELLIJ_INSTALLER" 2>/dev/null || true
-                bash "$INTELLIJ_INSTALLER"
-            else
-                echo -e "${RED}No se encontró el instalador de IntelliJ IDEA en $INTELLIJ_INSTALLER${NC}"
-            fi
-            ;;
-        *)
-            ;;
-    esac
-fi
-
-if [ -t 0 ] && [ -t 1 ]; then
-    echo -n "¿Deseas instalar DevTools (NVM + JDK21 + Maven) ahora? (s/n, por defecto: n): "
+    echo -n "¿Deseas instalar DevTools (NVM + JDK25 + Maven) ahora? (s/n, por defecto: n): "
     read -r install_devtools
     case "$install_devtools" in
         [sS]|[sS][iI])
@@ -468,6 +469,24 @@ if [ -t 0 ] && [ -t 1 ]; then
             fi
             ;;
         *)
+            ;;
+    esac
+fi
+
+if [ -t 0 ] && [ -t 1 ]; then
+    echo -n "¿Deseas instalar y configurar SSH ahora? (s/n, por defecto: s): "
+    read -r install_ssh
+    case "$install_ssh" in
+        [nN]|[nN][oO])
+            ;;
+        *)
+            SSH_INSTALLER="$SCRIPT_DIR/ssh/install_ssh.sh"
+            if [ -f "$SSH_INSTALLER" ]; then
+                chmod +x "$SSH_INSTALLER" 2>/dev/null || true
+                bash "$SSH_INSTALLER"
+            else
+                echo -e "${RED}No se encontró el instalador de SSH en $SSH_INSTALLER${NC}"
+            fi
             ;;
     esac
 fi
