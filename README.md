@@ -1,4 +1,4 @@
-# Project Install (Arch)
+# Instalación Inicial - Arch Linux Dev Environment
 
 [Español](#español) | [English](#english)
 
@@ -8,86 +8,216 @@
 
 ### ¿Qué es este proyecto?
 
-Este repositorio contiene un conjunto de scripts para **automatizar la instalación y configuración inicial** de un sistema Arch Linux (y derivados) después de una instalación desde cero.
+Este repositorio contiene un conjunto de scripts **modulares y organizados** para automatizar la instalación y configuración inicial de un **entorno de desarrollo completo** en Arch Linux (y derivados) después de una instalación desde cero.
 
-El objetivo es que puedas levantar tu entorno rápidamente:
+**Enfoque:** Sistema listo para desarrollo con Neovim personalizado, Hyprland como compositor Wayland, ZSH como shell por defecto, y todas las herramientas necesarias para programar en múltiples lenguajes.
 
-- Instalación de paquetes base y aplicaciones.
-- Instalación y configuración de ZSH + Oh My Zsh + Powerlevel10k.
-- Instalación de herramientas de desarrollo (NVM, JDK 21, Maven, Docker, etc.).
-- Instalación de aplicaciones externas (Windsurf, IntelliJ IDEA) con `.desktop`.
-- Copia de configuraciones (Hyprland, Kitty) a `~/.config`.
+### Características Principales
 
-> Nota: El script principal está pensado para **Arch/pacman**. Muchas partes son interactivas (preguntas) y se ejecutan mejor desde una terminal.
+✅ **Instalación completamente modular y organizada**
+✅ **Sistema base con drivers automáticos (NVIDIA/AMD/Intel)**
+✅ **Hyprland como compositor Wayland**
+✅ **ZSH + Oh My Zsh + Powerlevel10k configurado automáticamente**
+✅ **Neovim con configuraciones personalizadas**
+✅ **Herramientas de desarrollo (NVM, JDK 25, Maven, Docker)**
+✅ **Cloudflare WARP integrado**
+✅ **Fuentes Nerd Fonts para terminal**
 
-### Cómo se usa
+### Herramientas y Componentes Instalados
 
-1) Clonar el repo:
+#### 🎨 Entorno Gráfico y Terminal
+- **Hyprland** - Compositor Wayland moderno y eficiente
+- **Kitty** - Emulador de terminal GPU-accelerated
+- **Wofi** - Lanzador de aplicaciones
+- **Dolphin** - Gestor de archivos
+- **Fuentes**: JetBrains Mono Nerd, Font Awesome, Noto Emoji
 
-```bash
-git clone <TU_URL_DEL_REPO> project-install
-cd project-install
+#### 🖥️ Sistema y Drivers
+- **NetworkManager** - Gestión de red
+- **PipeWire** - Sistema de audio moderno (reemplaza PulseAudio)
+- **Códecs multimedia** - FFmpeg, GStreamer (todos los plugins)
+- **Microcódigo CPU** - AMD/Intel (detección automática)
+- **Drivers GPU** - NVIDIA/AMD/Intel (detección automática)
+
+#### 🐚 Shell y Herramientas CLI
+- **ZSH** - Shell por defecto
+- **Oh My Zsh** - Framework de configuración
+- **Powerlevel10k** - Tema avanzado con iconos
+- **zsh-autosuggestions** - Sugerencias automáticas
+- **zsh-syntax-highlighting** - Resaltado de sintaxis
+- **fzf** - Fuzzy finder
+- **eza** - Reemplazo moderno de `ls` con iconos
+
+#### 💻 Desarrollo
+- **Neovim** - Editor de texto avanzado con configuraciones personalizadas
+- **NVM** - Node Version Manager
+- **JDK 25** - Java Development Kit
+- **Maven** - Gestor de dependencias Java
+- **Docker + Docker Compose** - Contenedores
+
+#### 🌐 Red y Seguridad
+- **Cloudflare WARP** - VPN y DNS seguro
+- **SSH** - Configuración de servidor SSH
+
+#### 📦 Aplicaciones AUR
+- **Google Chrome** - Navegador web
+- **OnlyOffice** - Suite de oficina
+- **opencode.ai** - CLI interactiva de IA
+
+### Estructura del Repositorio
+
+```
+instalacion-inicial/
+├── install.sh                    # Script principal orquestador
+│
+├── cloudflare_warp/              # Configuración de Cloudflare WARP
+│   └── configure_warp.sh
+│
+├── drivers_utilities/            # Drivers y utilidades del sistema
+│   ├── README.md                 # Documentación detallada
+│   ├── network_install.sh        # NetworkManager
+│   ├── audio_install.sh          # PipeWire (audio)
+│   ├── codecs_install.sh         # Códecs multimedia
+│   ├── cpu_microcode_install.sh  # Microcódigo AMD/Intel
+│   └── gpu_drivers_install.sh    # Drivers NVIDIA/AMD/Intel
+│
+├── hyprland/                     # Compositor Wayland
+│   ├── install_hyprland.sh       # Instalación
+│   └── configure_hyprland.sh     # Configuración y autostart
+│
+├── yay_install/                  # Paquetes de AUR
+│   └── install_yay_packages.sh   # Chrome, OnlyOffice, WARP
+│
+├── zsh/                          # Shell ZSH
+│   ├── install_zsh.sh            # ZSH + Oh My Zsh + Powerlevel10k
+│   └── change_shell.sh           # Cambio de shell por defecto
+│
+├── devtools/                     # Herramientas de desarrollo
+│   └── install_nvm_jdk_maven.sh  # NVM + JDK 25 + Maven
+│
+├── docker/                       # Docker
+│   └── install_docker.sh         # Docker + Docker Compose
+│
+├── hypr/                         # Configuraciones de Hyprland
+│
+├── kitty/                        # Terminal Kitty
+│   └── install_kitty.sh          # Configuración y temas
+│
+├── nvim/                         # Neovim
+│   └── install.sh                # Neovim + configuraciones personalizadas
+│
+└── ssh/                          # SSH
+    └── install_ssh.sh            # Servidor SSH
 ```
 
-2) Ejecutar:
+### Cómo Usar
 
+#### Instalación Completa
+
+1. **Clonar el repositorio:**
+```bash
+git clone <URL_DEL_REPO> instalacion-inicial
+cd instalacion-inicial
+```
+
+2. **Ejecutar el script principal:**
 ```bash
 chmod +x install.sh
 ./install.sh
 ```
 
-El script te va a ir preguntando qué componentes querés instalar (tema de Kitty, Windsurf, IntelliJ, DevTools, Docker, etc.).
+El script te guiará paso a paso, preguntando qué componentes deseas instalar.
 
-### Qué hace `install.sh`
+#### Instalación Modular (Scripts Individuales)
 
-`install.sh` es el **orquestador**. En general:
+Cada componente puede ejecutarse de forma independiente:
 
-- **Actualiza el sistema** (`pacman -Syu`).
-- Instala dependencias base (`git`, `curl`, `base-devel`, etc.).
-- Instala `yay` si no existe (para AUR).
-- Instala paquetes del entorno (Hyprland/Kitty/Wofi/Dolphin, fuentes, ZSH).
-- Configura ZSH:
-  - instala Oh My Zsh (unattended)
-  - clona plugins (autosuggestions, syntax-highlighting)
-  - instala Powerlevel10k y lo deja como `ZSH_THEME`
-  - asegura que `~/.p10k.zsh` se cargue desde `~/.zshrc`
-- Agrega utilidades y configuración extra:
-  - `fzf`
-  - `eza` + aliases en `~/.zshrc`
-- Copia configs del repo hacia `~/.config`:
-  - `hypr/` -> `~/.config/hypr/`
-- Ofrece:
-  - cambiar el shell por defecto a ZSH (`chsh`) y manejar `/etc/shells`
-  - autoiniciar Hyprland en TTY1 (agrega bloque en `~/.zprofile`)
-- Al final puede invocar instaladores “modulares” (separados en carpetas).
+```bash
+# Instalar solo drivers de GPU
+bash drivers_utilities/gpu_drivers_install.sh
 
-### Estructura del repositorio
+# Instalar solo ZSH
+bash zsh/install_zsh.sh
+bash zsh/change_shell.sh
 
-- `install.sh`
-  - Script principal.
-- `hypr/`
-  - Configuración de Hyprland (ej. `hyprland.conf`).
-- `kitty/`
-  - `kitty.conf`, `current-theme.conf`.
-  - `install_kitty.sh`: copia config y opcionalmente abre el selector de temas.
-- `windsurf/`
-  - `install_windsurf.sh`: descarga latest, instala en `/opt/windsurf`, crea `.desktop` y ServiceMenu de Dolphin.
-- `intellij/`
-  - `install_intellij.sh`: descarga latest, instala en `/opt/intellij`, crea `.desktop` y ServiceMenu de Dolphin.
-- `devtools/`
-  - `install_nvm_jdk_maven.sh`: instala NVM + JDK 21 + Maven y configura `~/.zshrc`.
-- `docker/`
-  - `install_docker.sh`: instala Docker + Compose, habilita servicio y agrega usuario al grupo `docker`.
+# Instalar solo Hyprland
+bash hyprland/install_hyprland.sh
+bash hyprland/configure_hyprland.sh
 
-### Notas importantes
+# Instalar solo herramientas de desarrollo
+bash devtools/install_nvm_jdk_maven.sh
 
-- **Docker (grupo `docker`)**:
-  - Para usar Docker sin `sudo`, es necesario **cerrar sesión y volver a iniciar** (o reiniciar) para que el grupo tenga efecto.
-- **Hyprland autostart**:
-  - El bloque en `~/.zprofile` inicia Hyprland **solo en TTY1** y solo si no existe `DISPLAY`.
-  - Si usás un display manager (SDDM/GDM/greetd), conviene configurarlo ahí.
-- **Kitty**:
-  - Si tu `kitty.conf` fija `shell bash`, eso va a forzar bash aunque ZSH esté instalado. Ajustá `kitty.conf` a `shell zsh` si querés ZSH siempre.
+# Instalar solo Docker
+bash docker/install_docker.sh
+```
+
+### Orden de Instalación (install.sh)
+
+El script principal sigue este orden **optimizado** para evitar problemas:
+
+1. **Sistema base** - Actualización y dependencias
+2. **Drivers y utilidades** - NetworkManager, PipeWire, Códecs
+3. **Hardware** - Microcódigo CPU, Drivers GPU
+4. **Yay (AUR Helper)** - Para paquetes de AUR
+5. **Paquetes AUR** - Chrome, OnlyOffice, WARP
+6. **Fuentes** - Nerd Fonts e iconos
+7. **Hyprland** - Compositor Wayland
+8. **ZSH** - Shell + Oh My Zsh + Powerlevel10k + cambio de shell
+9. **Configuración de Hyprland** - Configs y autostart
+10. **Cloudflare WARP** - VPN y configuración
+11. **Instaladores opcionales** - Kitty, Neovim, DevTools, Docker, SSH
+12. **Herramientas adicionales** - opencode.ai
+
+> ⚠️ **Importante:** ZSH se configura ANTES de instalar Neovim y otras herramientas para garantizar que el shell esté correctamente configurado.
+
+### Notas Importantes
+
+#### 🔄 Reinicio de Sesión
+- **Después de cambiar a ZSH:** Reinicia tu sesión o abre una nueva terminal
+- **Después de instalar Docker:** Cierra sesión y vuelve a iniciarla para que el grupo `docker` tenga efecto
+- **Drivers NVIDIA:** Requieren reinicio completo del sistema
+
+#### 🎨 Powerlevel10k
+- La primera vez que abras ZSH, se ejecutará el asistente de configuración de Powerlevel10k
+- Puedes reconfigurarlo en cualquier momento con: `p10k configure`
+
+#### 🖥️ Hyprland Autostart
+- El script puede configurar Hyprland para iniciarse automáticamente en TTY1
+- Si usas un display manager (SDDM/GDM), configúralo ahí en su lugar
+
+#### 🐳 Docker sin sudo
+- Para usar Docker sin `sudo`, debes cerrar sesión después de la instalación
+- El script agrega tu usuario al grupo `docker` automáticamente
+
+#### 🔧 Neovim
+- El script instala Neovim con configuraciones personalizadas
+- Asegúrate de que ZSH ya esté configurado antes de instalar Neovim
+
+#### 🌐 Cloudflare WARP
+- Se configura para iniciarse automáticamente con Hyprland
+- Comando manual: `warp-cli connect` / `warp-cli disconnect`
+
+### Personalización
+
+Todos los scripts son modulares y pueden ser personalizados:
+
+- **Configuraciones de Hyprland:** `hypr/hyprland.conf`
+- **Configuraciones de Kitty:** `kitty/kitty.conf`
+- **Configuraciones de Neovim:** `nvim/`
+- **Plugins de ZSH:** Modifica `zsh/install_zsh.sh`
+
+### Requisitos Previos
+
+- Sistema Arch Linux (o derivado con `pacman`) instalado
+- Conexión a internet activa
+- Usuario con permisos `sudo`
+
+### Soporte
+
+Este es un proyecto personal de automatización. Los scripts están diseñados para:
+- Arch Linux y derivados (Manjaro, EndeavourOS, etc.)
+- Instalaciones limpias desde cero
+- Entornos de desarrollo
 
 ---
 
@@ -95,75 +225,143 @@ El script te va a ir preguntando qué componentes querés instalar (tema de Kitt
 
 ### What is this project?
 
-This repository contains scripts to **automate installation and initial setup** of an Arch Linux (and derivatives) system after a fresh install.
+This repository contains a set of **modular and organized scripts** to automate the installation and initial configuration of a **complete development environment** on Arch Linux (and derivatives) after a fresh install.
 
-Main goals:
+**Focus:** Development-ready system with customized Neovim, Hyprland as Wayland compositor, ZSH as default shell, and all necessary tools for multi-language programming.
 
-- Install base packages and applications.
-- Install and configure ZSH + Oh My Zsh + Powerlevel10k.
-- Install developer tooling (NVM, JDK 21, Maven, Docker, etc.).
-- Install external apps (Windsurf, IntelliJ IDEA) with `.desktop` launchers.
-- Copy configs (Hyprland, Kitty) into `~/.config`.
+### Key Features
 
-> Note: The main script is designed for **Arch/pacman**. Many steps are interactive (prompts) and are best run from a terminal.
+✅ **Fully modular and organized installation**
+✅ **Base system with automatic drivers (NVIDIA/AMD/Intel)**
+✅ **Hyprland as Wayland compositor**
+✅ **ZSH + Oh My Zsh + Powerlevel10k auto-configured**
+✅ **Neovim with custom configurations**
+✅ **Development tools (NVM, JDK 25, Maven, Docker)**
+✅ **Cloudflare WARP integrated**
+✅ **Nerd Fonts for terminal**
 
-### Usage
+### Installed Tools and Components
 
-1) Clone:
+#### 🎨 Graphical Environment and Terminal
+- **Hyprland** - Modern and efficient Wayland compositor
+- **Kitty** - GPU-accelerated terminal emulator
+- **Wofi** - Application launcher
+- **Dolphin** - File manager
+- **Fonts**: JetBrains Mono Nerd, Font Awesome, Noto Emoji
 
+#### 🖥️ System and Drivers
+- **NetworkManager** - Network management
+- **PipeWire** - Modern audio system (replaces PulseAudio)
+- **Multimedia codecs** - FFmpeg, GStreamer (all plugins)
+- **CPU microcode** - AMD/Intel (automatic detection)
+- **GPU drivers** - NVIDIA/AMD/Intel (automatic detection)
+
+#### 🐚 Shell and CLI Tools
+- **ZSH** - Default shell
+- **Oh My Zsh** - Configuration framework
+- **Powerlevel10k** - Advanced theme with icons
+- **zsh-autosuggestions** - Automatic suggestions
+- **zsh-syntax-highlighting** - Syntax highlighting
+- **fzf** - Fuzzy finder
+- **eza** - Modern `ls` replacement with icons
+
+#### 💻 Development
+- **Neovim** - Advanced text editor with custom configurations
+- **NVM** - Node Version Manager
+- **JDK 25** - Java Development Kit
+- **Maven** - Java dependency manager
+- **Docker + Docker Compose** - Containers
+
+#### 🌐 Network and Security
+- **Cloudflare WARP** - VPN and secure DNS
+- **SSH** - SSH server configuration
+
+#### 📦 AUR Applications
+- **Google Chrome** - Web browser
+- **OnlyOffice** - Office suite
+- **opencode.ai** - AI interactive CLI
+
+### How to Use
+
+#### Complete Installation
+
+1. **Clone the repository:**
 ```bash
-git clone <YOUR_REPO_URL> project-install
-cd project-install
+git clone <REPO_URL> instalacion-inicial
+cd instalacion-inicial
 ```
 
-2) Run:
-
+2. **Run the main script:**
 ```bash
 chmod +x install.sh
 ./install.sh
 ```
 
-The script will ask what optional components you want to install (Kitty theme selection, Windsurf, IntelliJ, DevTools, Docker, etc.).
+The script will guide you step by step, asking which components you want to install.
 
-### What `install.sh` does
+#### Modular Installation (Individual Scripts)
 
-`install.sh` is the **orchestrator**. In summary:
+Each component can be run independently:
 
-- **System update** (`pacman -Syu`).
-- Installs base dependencies (`git`, `curl`, `base-devel`, etc.).
-- Installs `yay` if missing (AUR helper).
-- Installs environment packages (Hyprland/Kitty/Wofi/Dolphin, fonts, ZSH).
-- Configures ZSH:
-  - installs Oh My Zsh (unattended)
-  - clones plugins (autosuggestions, syntax-highlighting)
-  - installs Powerlevel10k and sets it as `ZSH_THEME`
-  - ensures `~/.p10k.zsh` is sourced from `~/.zshrc`
-- Adds extra tools:
-  - `fzf`
-  - `eza` + aliases in `~/.zshrc`
-- Copies repo configs into `~/.config`:
-  - `hypr/` -> `~/.config/hypr/`
-- Offers:
-  - switching default shell to ZSH (`chsh`) and handling `/etc/shells`
-  - Hyprland autostart on TTY1 (writes a block into `~/.zprofile`)
-- Finally, it can call modular installers stored in separate folders.
+```bash
+# Install only GPU drivers
+bash drivers_utilities/gpu_drivers_install.sh
 
-### Repository layout
+# Install only ZSH
+bash zsh/install_zsh.sh
+bash zsh/change_shell.sh
 
-- `install.sh` (main)
-- `hypr/` (Hyprland config)
-- `kitty/` (`kitty.conf`, theme, and `install_kitty.sh`)
-- `windsurf/` (`install_windsurf.sh` + `.desktop` + Dolphin ServiceMenu)
-- `intellij/` (`install_intellij.sh` + `.desktop` + Dolphin ServiceMenu)
-- `devtools/` (`install_nvm_jdk_maven.sh`)
-- `docker/` (`install_docker.sh`)
+# Install only development tools
+bash devtools/install_nvm_jdk_maven.sh
+```
 
-### Important notes
+### Installation Order (install.sh)
 
-- **Docker group**:
-  - To use Docker without `sudo`, you must **log out and log back in** (or reboot) after being added to the `docker` group.
-- **Hyprland autostart**:
-  - The `~/.zprofile` snippet starts Hyprland only on **TTY1** and only when `$DISPLAY` is empty.
-  - If you use a display manager, configure autostart there.
-- **Kitty shell**:
-  - If your `kitty.conf` sets `shell bash`, it will always start bash even if ZSH is installed. Set it to `shell zsh` to always use ZSH.
+The main script follows this **optimized** order to avoid issues:
+
+1. **Base system** - Update and dependencies
+2. **Drivers and utilities** - NetworkManager, PipeWire, Codecs
+3. **Hardware** - CPU microcode, GPU drivers
+4. **Yay (AUR Helper)** - For AUR packages
+5. **AUR packages** - Chrome, OnlyOffice, WARP
+6. **Fonts** - Nerd Fonts and icons
+7. **Hyprland** - Wayland compositor
+8. **ZSH** - Shell + Oh My Zsh + Powerlevel10k + shell change
+9. **Hyprland configuration** - Configs and autostart
+10. **Cloudflare WARP** - VPN and configuration
+11. **Optional installers** - Kitty, Neovim, DevTools, Docker, SSH
+12. **Additional tools** - opencode.ai
+
+> ⚠️ **Important:** ZSH is configured BEFORE installing Neovim and other tools to ensure the shell is properly set up.
+
+### Important Notes
+
+#### 🔄 Session Restart
+- **After switching to ZSH:** Restart your session or open a new terminal
+- **After installing Docker:** Log out and log back in for the `docker` group to take effect
+- **NVIDIA drivers:** Require full system reboot
+
+#### 🎨 Powerlevel10k
+- The first time you open ZSH, the Powerlevel10k configuration wizard will run
+- You can reconfigure it anytime with: `p10k configure`
+
+#### 🖥️ Hyprland Autostart
+- The script can configure Hyprland to start automatically on TTY1
+- If you use a display manager (SDDM/GDM), configure it there instead
+
+#### 🐳 Docker without sudo
+- To use Docker without `sudo`, you must log out after installation
+- The script adds your user to the `docker` group automatically
+
+### Requirements
+
+- Arch Linux (or derivative with `pacman`) installed
+- Active internet connection
+- User with `sudo` permissions
+
+### Support
+
+This is a personal automation project. Scripts are designed for:
+- Arch Linux and derivatives (Manjaro, EndeavourOS, etc.)
+- Clean installs from scratch
+- Development environments

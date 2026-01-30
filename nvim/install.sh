@@ -100,6 +100,7 @@ sudo pacman -S --needed --noconfirm \
     npm \
     python \
     python-pip \
+    python-pynvim \
     tree-sitter \
     tree-sitter-cli \
     xclip \
@@ -128,10 +129,6 @@ if [ -d "$SCRIPT_DIR" ]; then
 else
     die "No se encontró el directorio de configuración: $SCRIPT_DIR"
 fi
-
-echo ""
-print_info "Instalando paquetes Python necesarios..."
-pip install --user pynvim
 
 echo ""
 print_info "Instalando neovim package manager para Node..."
