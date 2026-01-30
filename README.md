@@ -25,12 +25,20 @@ Este repositorio contiene un conjunto de scripts **modulares y organizados** par
 
 ### Herramientas y Componentes Instalados
 
-#### 🎨 Entorno Gráfico y Terminal
+#### 🎨 Entorno Gráfico y Aplicaciones
 - **Hyprland** - Compositor Wayland moderno y eficiente
 - **Kitty** - Emulador de terminal GPU-accelerated
-- **Wofi** - Lanzador de aplicaciones
-- **Dolphin** - Gestor de archivos
+- **Rofi** - Lanzador de aplicaciones (con temas de adi1090x)
+- **Dolphin** - Gestor de archivos con soporte USB completo
+- **mpv** - Reproductor de video y audio (optimizado para Wayland)
+- **imv** - Visor de imágenes nativo para Wayland
+- **zathura** - Visor de PDF ligero
 - **Fuentes**: JetBrains Mono Nerd, Font Awesome, Noto Emoji
+
+#### 🔌 Soporte de Dispositivos
+- **udisks2** - Sistema de montaje de discos automático
+- **udiskie** - Automontaje de USB con icono en bandeja
+- **gvfs** - Sistema de archivos virtual (MTP, PTP, AFC)
 
 #### 🖥️ Sistema y Drivers
 - **NetworkManager** - Gestión de red
@@ -91,6 +99,13 @@ instalacion-inicial/
 ├── zsh/                          # Shell ZSH
 │   ├── install_zsh.sh            # ZSH + Oh My Zsh + Powerlevel10k
 │   └── change_shell.sh           # Cambio de shell por defecto
+│
+├── rofi/                         # Lanzador de aplicaciones
+│   └── install_rofi.sh           # Rofi + temas adi1090x
+│
+├── desktop_apps/                 # Aplicaciones de escritorio
+│   ├── install_desktop_apps.sh   # Dolphin, mpv, imv, zathura + USB
+│   └── configure_mime.sh         # Asociaciones de archivos
 │
 ├── devtools/                     # Herramientas de desarrollo
 │   └── install_nvm_jdk_maven.sh  # NVM + JDK 25 + Maven
@@ -161,9 +176,9 @@ El script principal sigue este orden **optimizado** para evitar problemas:
 4. **Yay (AUR Helper)** - Para paquetes de AUR
 5. **Paquetes AUR** - Chrome, OnlyOffice, WARP
 6. **Fuentes** - Nerd Fonts e iconos
-7. **Hyprland** - Compositor Wayland
+7. **Entorno gráfico** - Hyprland, Dolphin, mpv, imv, Rofi
 8. **ZSH** - Shell + Oh My Zsh + Powerlevel10k + cambio de shell
-9. **Configuración de Hyprland** - Configs y autostart
+9. **Configuración** - Hyprland, asociaciones MIME
 10. **Cloudflare WARP** - VPN y configuración
 11. **Instaladores opcionales** - Kitty, Neovim, DevTools, Docker, SSH
 12. **Herramientas adicionales** - opencode.ai
@@ -196,6 +211,20 @@ El script principal sigue este orden **optimizado** para evitar problemas:
 #### 🌐 Cloudflare WARP
 - Se configura para iniciarse automáticamente con Hyprland
 - Comando manual: `warp-cli connect` / `warp-cli disconnect`
+
+#### 📁 Asociaciones de Archivos
+- Los archivos se abren automáticamente con la aplicación correcta:
+  - **Imágenes** (jpg, png, gif, etc.) → imv
+  - **Videos** (mp4, mkv, webm, etc.) → mpv
+  - **Audio** (mp3, flac, ogg, etc.) → mpv
+  - **PDF** → zathura
+  - **Documentos Office** (docx, xlsx, pptx) → OnlyOffice
+  - **Archivos de texto** → Neovim
+
+#### 🔌 Soporte USB
+- Los pendrives y dispositivos USB se montan automáticamente
+- Icono en bandeja del sistema para gestionar dispositivos
+- Soporte para cámaras, teléfonos Android/iOS, y dispositivos MTP
 
 ### Personalización
 
@@ -242,12 +271,20 @@ This repository contains a set of **modular and organized scripts** to automate 
 
 ### Installed Tools and Components
 
-#### 🎨 Graphical Environment and Terminal
+#### 🎨 Graphical Environment and Applications
 - **Hyprland** - Modern and efficient Wayland compositor
 - **Kitty** - GPU-accelerated terminal emulator
-- **Wofi** - Application launcher
-- **Dolphin** - File manager
+- **Rofi** - Application launcher (with adi1090x themes)
+- **Dolphin** - File manager with full USB support
+- **mpv** - Video and audio player (Wayland optimized)
+- **imv** - Native Wayland image viewer
+- **zathura** - Lightweight PDF viewer
 - **Fonts**: JetBrains Mono Nerd, Font Awesome, Noto Emoji
+
+#### 🔌 Device Support
+- **udisks2** - Automatic disk mounting system
+- **udiskie** - USB automount with tray icon
+- **gvfs** - Virtual filesystem (MTP, PTP, AFC)
 
 #### 🖥️ System and Drivers
 - **NetworkManager** - Network management
@@ -325,9 +362,9 @@ The main script follows this **optimized** order to avoid issues:
 4. **Yay (AUR Helper)** - For AUR packages
 5. **AUR packages** - Chrome, OnlyOffice, WARP
 6. **Fonts** - Nerd Fonts and icons
-7. **Hyprland** - Wayland compositor
+7. **Graphical environment** - Hyprland, Dolphin, mpv, imv, Rofi
 8. **ZSH** - Shell + Oh My Zsh + Powerlevel10k + shell change
-9. **Hyprland configuration** - Configs and autostart
+9. **Configuration** - Hyprland, MIME associations
 10. **Cloudflare WARP** - VPN and configuration
 11. **Optional installers** - Kitty, Neovim, DevTools, Docker, SSH
 12. **Additional tools** - opencode.ai

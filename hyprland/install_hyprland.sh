@@ -28,8 +28,8 @@ pacman_install() {
 
 print_info "==== Instalación de Hyprland y Componentes ===="
 
-# Instalar Hyprland, Kitty, Wofi y Dolphin
-print_info "Instalando Hyprland, Kitty, Wofi y Dolphin..."
-pacman_install hyprland kitty wofi dolphin
+# Instalar Hyprland y Kitty (Rofi se instala por separado)
+print_info "Instalando Hyprland y Kitty..."
+pacman_install hyprland kitty
 
 print_success "Hyprland y componentes instalados correctamente"

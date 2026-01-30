@@ -166,16 +166,35 @@ echo -e "\n${GREEN}[PASO 6/12] Instalando fuentes (TTF e iconos)...${NC}"
 pacman_install ttf-font-awesome ttf-jetbrains-mono-nerd noto-fonts-emoji ttf-liberation ttf-dejavu
 
 # ==============================================================================
-# PASO 7: INSTALACIÓN DE ENTORNO GRÁFICO (HYPRLAND)
+# PASO 7: INSTALACIÓN DE ENTORNO GRÁFICO Y APLICACIONES
 # ==============================================================================
-echo -e "\n${GREEN}[PASO 7/12] Instalando Hyprland y componentes...${NC}"
+echo -e "\n${GREEN}[PASO 7/12] Instalando entorno gráfico y aplicaciones...${NC}"
 
+# 7.1. Hyprland
 HYPRLAND_INSTALLER="$SCRIPT_DIR/hyprland/install_hyprland.sh"
 if [ -f "$HYPRLAND_INSTALLER" ]; then
     chmod +x "$HYPRLAND_INSTALLER" 2>/dev/null || true
     bash "$HYPRLAND_INSTALLER"
 else
     print_info "Instalador de Hyprland no encontrado, saltando..."
+fi
+
+# 7.2. Aplicaciones de escritorio (gestor de archivos, visor de imágenes, reproductor de video)
+DESKTOP_APPS_INSTALLER="$SCRIPT_DIR/desktop_apps/install_desktop_apps.sh"
+if [ -f "$DESKTOP_APPS_INSTALLER" ]; then
+    chmod +x "$DESKTOP_APPS_INSTALLER" 2>/dev/null || true
+    bash "$DESKTOP_APPS_INSTALLER"
+else
+    print_info "Instalador de aplicaciones de escritorio no encontrado, saltando..."
+fi
+
+# 7.3. Rofi (lanzador de aplicaciones)
+ROFI_INSTALLER="$SCRIPT_DIR/rofi/install_rofi.sh"
+if [ -f "$ROFI_INSTALLER" ]; then
+    chmod +x "$ROFI_INSTALLER" 2>/dev/null || true
+    bash "$ROFI_INSTALLER"
+else
+    print_info "Instalador de Rofi no encontrado, saltando..."
 fi
 
 # ==============================================================================
@@ -202,16 +221,26 @@ else
 fi
 
 # ==============================================================================
-# PASO 9: CONFIGURACIÓN DE HYPRLAND
+# PASO 9: CONFIGURACIÓN DE HYPRLAND Y ASOCIACIONES MIME
 # ==============================================================================
-echo -e "\n${GREEN}[PASO 9/12] Configurando Hyprland...${NC}"
+echo -e "\n${GREEN}[PASO 9/12] Configurando Hyprland y asociaciones de archivos...${NC}"
 
+# 9.1. Configuración de Hyprland
 HYPRLAND_CONFIGURATOR="$SCRIPT_DIR/hyprland/configure_hyprland.sh"
 if [ -f "$HYPRLAND_CONFIGURATOR" ]; then
     chmod +x "$HYPRLAND_CONFIGURATOR" 2>/dev/null || true
     bash "$HYPRLAND_CONFIGURATOR"
 else
     print_info "Configurador de Hyprland no encontrado, saltando..."
+fi
+
+# 9.2. Configuración de asociaciones MIME (aplicaciones por defecto)
+MIME_CONFIGURATOR="$SCRIPT_DIR/desktop_apps/configure_mime.sh"
+if [ -f "$MIME_CONFIGURATOR" ]; then
+    chmod +x "$MIME_CONFIGURATOR" 2>/dev/null || true
+    bash "$MIME_CONFIGURATOR"
+else
+    print_info "Configurador de MIME no encontrado, saltando..."
 fi
 
 # ==============================================================================
